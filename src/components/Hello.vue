@@ -21,7 +21,7 @@
     methods: {
       increment () {
         this.$store.commit('increment', {
-          amount: 10
+          amount: 30
         });
       },
       decrement () {
