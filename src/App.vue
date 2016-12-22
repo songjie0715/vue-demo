@@ -1,28 +1,50 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <Hello></Hello>
+    <section class="todoapp">
+      <!-- header -->
+      <header class="header">
+        <h1>todos</h1>
+        <input class="new-todo"
+          @keyup.enter="addTodo">
+      </header>
+      <!-- main section -->
+      <section class="main">
+        <!-- <input class="toggle-all" type="checkbox"> -->
+        <ul class="todo-list">
+          <todo v-for="todo in todos" :todo="todo"></todo>
+        </ul>
+      </section>
+      <!-- footer -->
+      <footer class="footer">
+        <span class="todo-count">
+          <strong></strong>
+        </span>
+      </footer>
+    </section>
   </div>
 </template>
 
-<script>
-import Hello from './components/Hello';
 
+<script>
+import Todo from './components/Todo.vue';
 export default {
-  name: 'app',
-  components: {
-    Hello
-  }
+    components: { Todo },
+    name: 'app',
+    computed: {
+        todos () {
+            return this.$store.state.todos;
+        }
+    },
+    methods: {
+        addTodo (e) {
+            var text = e.target.value;
+            if (text.trim()) {
+                this.$store.commit('addTodo', { text });
+            }
+            e.target.value = '';
+        }
+    }
 };
 </script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+

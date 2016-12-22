@@ -10,7 +10,7 @@
 </template>
 
 <script>
-  import { mapState, mapGetters } from 'vuex';
+  import { mapState, mapGetters, mapMutations } from 'vuex';
   export default {
     name: 'hello',
     computed: {
@@ -19,17 +19,7 @@
       ...mapGetters(['doneTodoCount'])
     },
     methods: {
-      increment () {
-        this.$store.commit('increment', {
-          amount: 20
-        });
-      },
-      decrement () {
-        this.$store.commit({
-          type: 'decrement',
-          amount: 10
-        });
-      }
+      ...mapMutations(['increment', 'decrement'])
     }
   };
 </script>
