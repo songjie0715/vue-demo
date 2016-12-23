@@ -13,6 +13,13 @@ export default new Vuex.Store({
                 text,
                 done: false
             });
+        },
+        deleteTodo: (state, {todo}) => {
+            state.todos.splice(state.todos.indexOf(todo), 1);
+        },
+        toggleTodo: (state, {todo}) => {
+            let todoItem = state.todos[state.todos.indexOf(todo)];
+            todoItem.done = !todoItem.done;
         }
     }
 });

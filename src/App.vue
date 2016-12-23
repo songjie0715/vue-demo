@@ -17,7 +17,7 @@
       <!-- footer -->
       <footer class="footer">
         <span class="todo-count">
-          <strong></strong>
+          <strong v-show="undoneLen">left {{ undoneLen }}</strong>
         </span>
       </footer>
     </section>
@@ -33,6 +33,12 @@ export default {
     computed: {
         todos () {
             return this.$store.state.todos;
+        },
+        doneLen () {
+            return this.$store.state.todos.filter(todo => todo.done).length;
+        },
+        undoneLen () {
+            return this.$store.state.todos.length - this.doneLen;
         }
     },
     methods: {
