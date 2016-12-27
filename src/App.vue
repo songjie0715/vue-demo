@@ -11,7 +11,7 @@
       <section class="main">
         <!-- <input class="toggle-all" type="checkbox"> -->
         <ul class="todo-list">
-          <todo v-for="todo in todos" :todo="todo"></todo>
+          <todo v-for="todo in filteredTodos" :todo="todo"></todo>
         </ul>
       </section>
       <!-- footer -->
@@ -19,8 +19,13 @@
         <span class="todo-count">
           <strong v-show="undoneLen">All {{ todoLen }}</strong>
         </span>
-        <span>已完成的 <i>{{ doneLen }}</i></span>
-        <span>未完成的 <i>{{ undoneLen }}</i></span>
+        <ul>
+          <li v-for="(val, key) in filters">
+              <a href="#"
+                  :class="{ selected:  visiblity === key }"
+                  @click.prevent="visiblity = key">{{ key }}</a>
+          </li>
+        </ul>
       </footer>
     </section>
   </div>
@@ -31,12 +36,27 @@
 import Todo from './components/Todo.vue';
 // import { mapMutations } from 'vuex';
 
+const filters = {
+    all: todos => todos,
+    active: todos => todos.filter(todo => !todo.done),
+    completed: todos => todos.filter(todo => todo.done)
+};
+
 export default {
     components: { Todo },
     name: 'app',
+    data () {
+        return {
+            visiblity: 'all',
+            filters: filters
+        };
+    },
     computed: {
         todos () {
             return this.$store.state.todos;
+        },
+        filteredTodos () {
+            return filters[this.visiblity](this.todos);
         },
         todoLen () {
             return this.$store.state.todos.length;
@@ -55,6 +75,9 @@ export default {
                 this.$store.commit('addTodo', { text });
             }
             e.target.value = '';
+        },
+        doneTask () {
+
         }
     }
 };
