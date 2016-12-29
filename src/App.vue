@@ -17,7 +17,7 @@
       <!-- footer -->
       <footer class="footer">
         <span class="todo-count">
-          <strong v-show="undoneLen">All {{ todoLen }}</strong>
+          <strong v-show="undoneLen">{{ undoneLen }} item left</strong>
         </span>
         <ul>
           <li v-for="(val, key) in filters">
