@@ -1,9 +1,9 @@
 <template>
   <li class="todo">
     <div class="view">
-      <input class="toggle" type="checkbox" @change="toggleTodo(todo)">
+      <input class="toggle" type="checkbox" :checked="todo.done" @change="toggleTodo({ todo: todo })">
       <label v-text="todo.text"></label>
-      <button @click="deleteTodo(todo)">删除</button>
+      <button @click="deleteTodo({ todo: todo })">删除</button>
     </div>
   </li>
 </template>
