@@ -1,22 +1,23 @@
 <template>
   <li class="todo">
     <div class="view">
-      <input class="toggle" type="checkbox" :checked="todo.done">
+      <input class="toggle" type="checkbox" @change="toggleTodo(todo)">
       <label v-text="todo.text"></label>
-      <button @click="deleteItem">删除</button>
+      <button @click="deleteTodo(todo)">删除</button>
     </div>
   </li>
 </template>
 
 <script>
+  import { mapMutations } from 'vuex';
   export default {
       name: 'Todo',
       props: ['todo'],
       methods: {
-          deleteItem: function (todo) {
-              console.log(this);
-              this.$emit('delete-todo', todo);
-          }
+          ...mapMutations([
+              'toggleTodo',
+              'deleteTodo'
+          ])
       }
   };
 </script>

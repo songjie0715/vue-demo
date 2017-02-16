@@ -2,7 +2,7 @@
     <div id="todoList">
         <input type="text" @keyup.enter="addToList" />
         <ul>
-            <todo v-for="todo in list" :todo = todo></todo>
+            <todo v-for="(item, index) in list" :todo="item" @delete-todo="deleteTodo(item,index)"></todo>
         </ul>
     </div>
 </template>
@@ -11,7 +11,7 @@
     export default{
         data () {
             return {
-                list: []
+                list: this.$store.state.todos
             };
         },
         name: 'TodoList',
@@ -22,16 +22,15 @@
             addToList: function (e) {
                 var text = e.target.value;
                 if (text.trim()) {
-                    this.list.push({
+                    this.$store.commit('addTodo', {
                         done: false,
                         text: text
                     });
                 }
                 e.target.value = '';
             },
-            deleteTodo: function (todo) {
-                console.log(todo);
-                this.list.splice(todo, 1);
+            deleteTodo: function (item, index) {
+                this.list.splice(index, 1);
             }
         }
     };

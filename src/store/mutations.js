@@ -20,6 +20,7 @@ export const mutations = {
         updateState();
     },
     toggleTodo: (state, {todo}) => {
+        console.log(todo);
         let todoItem = state.todos[state.todos.indexOf(todo)];
         todoItem.done = !todoItem.done;
         updateState();
