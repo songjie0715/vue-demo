@@ -5,6 +5,7 @@ import store from './store/';
 import VueRouter from 'vue-router';
 import selectComponents from './components/select.vue';
 import todoListComponents from './components/TodoList.vue';
+import gridComponent from './components/grid.vue';
 import '../node_modules/select2/dist/js/select2.min';
 import '../node_modules/select2/dist/css/select2.min.css';
 
@@ -55,7 +56,8 @@ const router = new VueRouter({
                 { path: 'foo', component: Foo },
                 { path: 'bar', component: Bar }
             ]
-        }
+        },
+      { path: '/grid', component: gridComponent }
     ]
 });
 
@@ -71,6 +73,7 @@ new Vue({
                   <li><router-link to="/parent">/parent</router-link></li>
                   <li><router-link to="/parent/foo">/parent/foo</router-link></li>
                   <li><router-link to="/parent/bar">/parent/bar</router-link></li>
+                  <li><router-link to="/grid">/grid</router-link></li>
                 </ul>
                 <transition name="fade" mode="out-in">
                   <router-view class="view"></router-view>

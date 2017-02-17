@@ -1,5 +1,5 @@
 <template>
-  <li class="todo">
+  <li class="todo" :class="{ done: todo.done }">
     <div class="view">
       <input class="toggle" type="checkbox" :checked="todo.done" @change="toggleTodo({ todo: todo })">
       <label v-text="todo.text"></label>
@@ -7,6 +7,13 @@
     </div>
   </li>
 </template>
+
+<style>
+    .done{
+        text-decoration: line-through;
+        color: #ccc;
+    }
+</style>
 
 <script>
   import { mapMutations } from 'vuex';
