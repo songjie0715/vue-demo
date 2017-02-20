@@ -2,19 +2,72 @@
     <table>
         <thead>
             <tr>
-                <th v-for="col in this.columns">
+                <th v-for="col in columns"
+                    @click="sortBy(col)"
+                    :class="{'active': sortKey == col}">
                     {{ col }}
-                    <span class="arrow"></span>
+                    <span class="arrow" :class="sortList[col] > 0 ? 'asc' : 'dsc'"></span>
                 </th>
             </tr>
         </thead>
         <tbody>
-            <tr v-for="item in this.filteredData">
+            <tr v-for="item in filteredData">
                 <td v-for="i in item">{{ i }}</td>
             </tr>
         </tbody>
     </table>
 </template>
+
+<script>
+  export default {
+      name: 'demo-grid',
+      props: {
+          filterData: Array,
+          columns: Array,
+          filterKey: String
+      },
+      data () {
+          let sortList = {};
+          this.columns.forEach(function (ele) {
+              sortList[ele] = 1;
+          });
+          return {
+              sortKey: '',
+              sortList: sortList
+          };
+      },
+      computed: {
+          filteredData () {
+              let sortKey = this.sortKey;
+              let filterKey = this.filterKey;
+              let order = this.sortList[sortKey] || 1;
+              let filterData = this.filterData;
+
+              if (filterKey) {
+                  filterData = filterData.filter(function (item) {
+                      return Object.keys(item).some(function (key) {
+                          return String(item[key]).toLowerCase().indexOf(filterKey) > -1;
+                      });
+                  });
+              };
+              if (sortKey) {
+                  filterData = filterData.slice().sort(function (a, b) {
+                      a = a[sortKey];
+                      b = b[sortKey];
+                      return (a === b ? 0 : a > b ? 1 : -1) * order;
+                  });
+              };
+              return filterData;
+          }
+      },
+      methods: {
+          sortBy (col) {
+              this.sortKey = col;
+              this.sortList[col] = this.sortList[col] * -1;
+          }
+      }
+  };
+</script>
 
 <style>
     body {
@@ -76,26 +129,6 @@
       border-right: 4px solid transparent;
       border-top: 4px solid #fff;
     }
-
 </style>
-
-<script>
-  export default {
-      name: 'demo-grid',
-      props: ['filter-data', 'columns', 'filterKey'],
-      computed: {
-          filteredData () {
-              var sortKey = this.filterKey;
-              this.filterData = this.filterData.filter(function (item) {
-                  if (item.id === sortKey || item.power === sortKey) {
-                      return true;
-                  }
-              });
-          }
-      }
-  };
-
-</script>
-
 
 
