@@ -1,86 +1,62 @@
 <template>
   <div id="app">
-    <section class="todoapp">
-      <!-- header -->
-      <header class="header">
-        <h1>todos</h1>
-        <input class="new-todo"
-          @keyup.enter="addTodo">
-      </header>
-      <!-- main section -->
-      <section class="main">
-        <!-- <input class="toggle-all" type="checkbox"> -->
-        <ul class="todo-list">
-          <todo v-for="todo in filteredTodos" :todo="todo"></todo>
-        </ul>
-      </section>
-      <!-- footer -->
-      <footer class="footer">
-        <span class="todo-count">
-          <strong v-show="undoneLen">{{ undoneLen }} item left</strong>
-        </span>
-        <ul>
-          <li v-for="(val, key) in filters">
-              <a href="#"
-                  :class="{ selected:  visiblity === key }"
-                  @click.prevent="visiblity = key">{{ key }}</a>
-          </li>
-        </ul>
-      </footer>
-    </section>
+    <el-container>
+      <el-aside width="200px">
+        <el-menu>
+          <el-submenu index="1">
+            <template slot="title"><i class="el-icon-message"></i>导航一</template>
+            <el-menu-item-group>
+              <template slot="title">分组一</template>
+              <el-menu-item index="1-1">
+                <router-link to="">选项1</router-link>
+              </el-menu-item>
+              <el-menu-item index="1-2">选项2</el-menu-item>
+            </el-menu-item-group>
+            <el-menu-item-group title="分组2">
+              <el-menu-item index="1-3">选项3</el-menu-item>
+            </el-menu-item-group>
+            <el-submenu index="1-4">
+              <template slot="title">选项4</template>
+              <el-menu-item index="1-4-1">选项4-1</el-menu-item>
+            </el-submenu>
+          </el-submenu>
+          <el-submenu index="2">
+            <template slot="title"><i class="el-icon-message"></i>导航一</template>
+            <el-menu-item-group>
+              <template slot="title">分组一</template>
+              <el-menu-item index="1-1">选项1</el-menu-item>
+              <el-menu-item index="1-2">选项2</el-menu-item>
+            </el-menu-item-group>
+            <el-menu-item-group title="分组2">
+              <el-menu-item index="1-3">选项3</el-menu-item>
+            </el-menu-item-group>
+            <el-submenu index="1-4">
+              <template slot="title">选项4</template>
+              <el-menu-item index="1-4-1">选项4-1</el-menu-item>
+            </el-submenu>
+          </el-submenu>
+        </el-menu>
+      </el-aside>
+      <el-main>
+        <div class="grid-content bg-purple">
+          <el-button @click="visible = true">按钮</el-button>
+          <el-dialog :visible.sync="visible" title="Hello world">
+            <p>欢迎使用 Element</p>
+          </el-dialog>
+        </div>
+      </el-main>
+    </el-container>
   </div>
 </template>
 
-
 <script>
-import Todo from './components/Todo.vue';
-// import { mapMutations } from 'vuex';
-
-const filters = {
-    all: todos => todos,
-    active: todos => todos.filter(todo => !todo.done),
-    completed: todos => todos.filter(todo => todo.done)
-};
-
-export default {
-    components: { Todo },
-    name: 'app',
-    data () {
-        return {
-            visiblity: 'all',
-            filters: filters
-        };
-    },
-    computed: {
-        todos () {
-            return this.$store.state.todos;
-        },
-        filteredTodos () {
-            return filters[this.visiblity](this.todos);
-        },
-        todoLen () {
-            return this.$store.state.todos.length;
-        },
-        doneLen () {
-            return this.$store.state.todos.filter(todo => todo.done).length;
-        },
-        undoneLen () {
-            return this.$store.state.todos.length - this.doneLen;
-        }
-    },
-    methods: {
-        addTodo (e) {
-            var text = e.target.value;
-            if (text.trim()) {
-                this.$store.commit('addTodo', { text });
-            }
-            e.target.value = '';
-        },
-        doneTask () {
-
-        }
-    }
-};
+  export default {
+      data () {
+          return {
+              visible: false
+          };
+      }
+  };
 </script>
 
 
