@@ -16,15 +16,12 @@
 </style>
 
 <script>
-  import { mapMutations } from 'vuex';
+  import { mapActions } from 'vuex';
   export default {
       name: 'Todo',
       props: ['todo'],
       methods: {
-          ...mapMutations([
-              'toggleTodo',
-              'deleteTodo'
-          ])
+          ...mapActions(['toggleTodo', 'deleteTodo'])
       }
   };
 </script>

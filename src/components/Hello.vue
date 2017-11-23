@@ -1,7 +1,6 @@
 <template>
   <div class="hello">
     <p>{{ count }}</p>
-    <p>{{ doneTodoCount }}</p>
     <p>
       <button @click="increment">+</button>
       <button @click="decrement">-</button>
@@ -10,16 +9,14 @@
 </template>
 
 <script>
-  import { mapState, mapGetters, mapMutations } from 'vuex';
+  import { mapState, mapActions } from 'vuex';
   export default {
-    name: 'hello',
-    computed: {
-      num () { return 3; },
-      ...mapState(['count']),
-      ...mapGetters(['doneTodoCount'])
-    },
-    methods: {
-      ...mapMutations(['increment', 'decrement'])
-    }
+      name: 'hello',
+      computed: {
+          ...mapState(['count'])
+      },
+      methods: {
+          ...mapActions(['increment', 'decrement'])
+      }
   };
 </script>

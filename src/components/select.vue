@@ -8,6 +8,8 @@
 </template>
 
 <script>
+    import '../..//node_modules/select2/dist/js/select2.min';
+    import '../../node_modules/select2/dist/css/select2.min.css';
     import select2Component from './select2.vue';
     export default{
         data () {
