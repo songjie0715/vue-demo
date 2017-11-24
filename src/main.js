@@ -7,6 +7,7 @@ import App from './App.vue';
 import selectComponents from './components/select.vue';
 import todoComponent from './components/TodoList.vue';
 import HelloComponent from './components/Hello.vue';
+import shoppingcarComponent from './components/shoppingCart.vue';
 
 Vue.use(Element);
 Vue.use(VueRouter);
@@ -32,7 +33,8 @@ const router = new VueRouter({
       { path: '/a', component: selectComponents },
       { path: '/', component: Home },
       { path: '/todolist', component: todoComponent },
-      { path: '/hello', component: HelloComponent }
+      { path: '/hello', component: HelloComponent },
+      { path: '/shoppingcart', component: shoppingcarComponent }
     ]
 });
 
