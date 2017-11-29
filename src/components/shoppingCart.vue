@@ -1,24 +1,27 @@
 <template>
   <main>
-    <header><span>商品列表</span></header>
-    <nav>
-      <ul>
-        <li>推荐</li>
-        <li>母婴</li>
-        <li>鞋包饰品</li>
-        <li>食品</li>
-        <li>数码家电</li>
-        <li>居家百货</li>
-      </ul>
-      <ul>
-        <li>综合排序</li>
-        <li>销量优先</li>
-        <li>价格</li>
-      </ul>
-    </nav>
-
-      <ul class="good-list">
-
-      </ul>
-    </main>
+    <header>购物车</header>
+    <ul>
+      <li v-for="item in list">
+        <img :src="item.img" :alt="item.name">
+        <p class="good-name">{{ item.name }}</p>
+        <p class="good-price"> {{ item.price }} </p>
+        <p><span>+</span><span>-</span></p>
+      </li>
+    </ul>
+  </main>
 </template>
+
+<style lang="scss" scoped></style>
+
+<script>
+  export default {
+      data () {
+          return {
+              list: this.$store.state.shoppingCart
+          };
+      }
+  };
+</script>
+
+

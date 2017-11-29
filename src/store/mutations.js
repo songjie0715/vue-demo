@@ -2,7 +2,8 @@ import * as types from './mutation-types';
 
 export const state = {
     todos: JSON.parse(window.localStorage.getItem('todoKey') || '[]'),
-    count: 0
+    count: 0,
+    shoppingCart: []
 };
 
 let updateState = () => {
