@@ -3,7 +3,8 @@ import * as types from './mutation-types';
 export const state = {
     todos: JSON.parse(window.localStorage.getItem('todoKey') || '[]'),
     count: 0,
-    shoppingCart: []
+    shoppingCartList: [],
+    totalPrice: 0
 };
 
 let updateState = () => {
@@ -42,6 +43,36 @@ export const mutations = {
     },
     [types.DECREMENT] (state) {
         state.count--;
+    },
+    [types.ADD_TO_SHOPPINGCART] (state, {item}) {
+        let single = state.shoppingCartList.find(d => d.id === item.id);
+        if (!single) {
+            state.shoppingCartList.push({
+                ...item,
+                count: 1,
+                isChecked: false
+            });
+        } else {
+            single.count++;
+        };
+    },
+    [types.MINUS_FROM_SHOPPINGCART] (state, {item}) {
+        let index = state.shoppingCartList.findIndex(d => d.id === item.id);
+        let num = state.shoppingCartList[index].count;
+        if (num > 1) {
+            state.shoppingCartList[index].count--;
+        } else {
+            state.shoppingCartList.splice(index, 1);
+        }
+    },
+    [types.CALC_PRICE] (state, {id}) {
+        let index = state.shoppingCartList.findIndex(d => d.id === id);
+        state.shoppingCartList[index].isChecked = !state.shoppingCartList[index].isChecked;
+        state.shoppingCartList.each(function (d, i) {
+            if (d.isChecked === true) {
+                state.totalPrice = d.price * d.count;
+            };
+        });
     }
 };
 
@@ -60,6 +91,15 @@ export const actions = {
     },
     decrement ({ commit }) {
         commit(types['DECREMENT']);
+    },
+    addToShoppingCart ({ commit }, item) {
+        commit(types['ADD_TO_SHOPPINGCART'], item);
+    },
+    minusFromShoppingCart ({ commit }, item) {
+        commit(types['MINUS_FROM_SHOPPINGCART'], item);
+    },
+    calcPrice ({ commit }, id) {
+        commit(types['CALC_PRICE'], id);
     }
 
 };

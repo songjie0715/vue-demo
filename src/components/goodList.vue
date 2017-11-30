@@ -209,7 +209,7 @@
            * @param item
            */
           addToCart (item) {
-              this.$store.state.shoppingCart.push(item);
+              this.$store.dispatch('addToShoppingCart', { item: item });
           }
       }
 

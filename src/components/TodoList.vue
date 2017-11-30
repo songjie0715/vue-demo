@@ -31,10 +31,6 @@
                         done: false,
                         text: text
                     });
-//                    this.$store.commit('addTodo', {
-//                        done: false,
-//                        text: text
-//                    });
                 }
                 e.target.value = '';
             },
