@@ -18,6 +18,19 @@ export const getters = {
     },
     doneTodosCount: (state, getters) => {
         return getters.doneTodos.length;
+    },
+    getShoppingCartTotalPrice: (state, getters) => {
+        state.totalPrice = 0;
+        if (state.shoppingCartList.length === 0) {
+            state.totalPrice = 0;
+            return state.totalPrice;
+        }
+        state.shoppingCartList.forEach(function (d, i) {
+            if (d.isChecked === true) {
+                state.totalPrice += d.price * d.count;
+            }
+        });
+        return state.totalPrice;
     }
 };
 
@@ -68,11 +81,6 @@ export const mutations = {
     [types.CALC_PRICE] (state, {id}) {
         let index = state.shoppingCartList.findIndex(d => d.id === id);
         state.shoppingCartList[index].isChecked = !state.shoppingCartList[index].isChecked;
-        state.shoppingCartList.each(function (d, i) {
-            if (d.isChecked === true) {
-                state.totalPrice = d.price * d.count;
-            };
-        });
     }
 };
 
